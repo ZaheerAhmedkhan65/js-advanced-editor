@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Exercise</title>
+    <link rel="stylesheet" href="./resources/dist/editor.css">
+    <link rel="stylesheet" href="./resources/dist/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="exercise-text"></div>
+        <div class="d-flex align-items-center justify-content-between bg-secondary-subtle p-3">
+            <div class="editor-lang"></div>
+            <div class="d-flex align-items-center gap-3">
+                <label for="training-mode" class="switch" title="Training Mode">
+                    <input id="training-mode" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-gear"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <button class="dropdown-item">Copy</button>
+                        <button class="dropdown-item">Reset</button>
+                        <button class="dropdown-item">Format</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="editor" class="editor-box"></div>
+        <div class="d-flex align-items-center justify-content-between bg-secondary-subtle p-3">
+            <button class="btn btn-sm btn-primary" id="run-button">Run</button>
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-sm btn-light" id="prev-button">Previous</button>
+                <button class="btn btn-sm btn-light" id="next-button">Next</button>
+            </div>
+        </div>
+        <div id="output" class="output" style="display: none;"></div>
+    </div>
+
+
+    <script src="./resources/dist/bootstrap.bundle.min.js"></script>
+    <!-- Monaco Editor -->
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs/loader.js"></script>
+
+
+    <script src="./resources/js/index.js"></script>
+    <!-- bootstrap -->
+    <script>
+        let monacoEditor;
+        require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs' } });
+        require(["vs/editor/editor.main"], function () {
+            window.monacoEditor = monaco.editor.create(document.getElementById("editor"), {
+                value: "",
+                language: "javascript",
+                theme: "vs-dark",
+                automaticLayout: true
+            });
+        });
+
+        if (typeof renderExercise === "function") {
+            setTimeout(() => {
+                renderExercise(0);
+            }, 1000)
+        }
+    </script>
+
+    <script src="./resources/utils/responsiveVoice.js"></script>
+    <!-- <script src="https://code.responsivevoice.org/responsivevoice.js?key=7HDfBuEJ"></script> -->
+    <script src="./resources/js/train.js"></script>
+</body>
+
+</html>
