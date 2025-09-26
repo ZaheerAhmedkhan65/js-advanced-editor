@@ -56,24 +56,22 @@ function deepEqual(a, b) {
   return JSON.stringify(a) === JSON.stringify(b);
 }
 
-function highlightCode(text) {
+function highlightLabel(text) {
   return text.replace(/`([^`]+)`/g, '<span class="label">$1</span>');
 }
 
-  const editorContainer = document.querySelector("#editor");
- 
-  const outputDiv = document.getElementById("output");
+const editorContainer = document.querySelector("#editor");
 
- 
+const outputDiv = document.getElementById("output");
 
-  function updateActions(elem){
- const hideLabelButton = document.querySelector(".result-status-label>button");
+function updateActions(elem) {
+  const hideLabelButton = document.querySelector(".result-status-label>button");
 
   hideLabelButton.addEventListener("click", () => {
     outputDiv.style.display = outputDiv.style.display = "none";
-  elem.remove();
+    elem.remove();
   })
-  }
+}
 
 // Render current exercise
 function renderExercise(currentExIndex) {
@@ -85,7 +83,7 @@ function renderExercise(currentExIndex) {
   editorLangContainer.innerHTML = `<span class="fw-bold">${currentExercise.codeLang}</span>`;
   exerciseText.innerHTML = `
     <h2>${currentExercise.title}</h2>
-    <p>${highlightCode(currentExercise.problem_statement)}</p>
+    <p>${highlightLabel(currentExercise.problem_statement)}</p>
     <p><strong>Test Cases:</strong></p>
     <ul>
       ${currentExercise.test_cases

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Editor</title>
+  <style>
+    .editor-container {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      width: 600px;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      font-family: monospace;
+      margin-bottom: 10px;
+    }
+    iframe {
+      width: 100%;
+      height: 200px;
+      border: 1px solid #333;
+    }
+    pre.console-output {
+      background: #111;
+      color: #0f0;
+      padding: 10px;
+      height: 200px;
+      overflow: auto;
+      border-radius: 5px;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+<div class="main-content-wrapper">
+        <div class="exercise-text"></div>
+        <div class="d-flex align-items-center justify-content-between bg-secondary-subtle p-3">
+            <div class="editor-lang"></div>
+            <div class="d-flex align-items-center gap-3">
+                <label for="training-mode" class="switch" title="Training Mode">
+                    <input id="training-mode" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-gear"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <button class="dropdown-item">Copy</button>
+                        <button class="dropdown-item">Reset</button>
+                        <button class="dropdown-item">Format</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="editorArea" style="min-height: 200px;" class="editor-box"></div>
+        <div class="d-flex align-items-center justify-content-between bg-secondary-subtle p-3">
+            <button class="btn btn-sm btn-primary" id="run-button">Run</button>
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-sm btn-light" id="prev-button">Previous</button>
+                <button class="btn btn-sm btn-light" id="next-button">Next</button>
+            </div>
+        </div>
+        <div id="output" class="output" style="display: none;"></div>
+    </div>
+        <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs/loader.js"></script>
+
+    <script>
+        let monacoEditor;
+        require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs' } });
+        require(["vs/editor/editor.main"], function () {
+            window.monacoEditor = monaco.editor.create(document.getElementById("editorArea"), {
+                value: "",
+                language: "javascript",
+                theme: "vs-dark",
+                automaticLayout: true
+            });
+        });
+
+        if (typeof renderExercise === "function") {
+            setTimeout(() => {
+                renderExercise(0);
+            }, 1000)
+        }
+    </script>
+
+    <script src="./resources/utils/responsiveVoice.js"></script>
+<script>
+class Editor {
+  constructor({ containerId, exercises = [], type = "example", codeLang }) {
+    this.container = document.getElementById(containerId);
+    this.exercises = exercises;
+    this.type = type; // "example" or "exercise"
+
+    this.currentExerciseIndex = 0;
+    this.trainingMode = false;
+    this.currentStep = 0;
+    this.codeLang = codeLang;
+
+    this.outputDiv = document.getElementById("output");
+    this.trainingButton = document.getElementById("training-mode");
+
+    this.init();
+  }
+
+
+  init() {
+    // Bind training button
+    this.trainingButton.addEventListener("click", () => {
+      this.trainingMode = !this.trainingMode;
+      if (this.trainingMode) {
+        this.currentStep = 0;
+        window.monacoEditor.setValue(""); // Clear editor
+        this.runTrainingStep();
+      }
+    });
+
+    // Buttons
+    document.getElementById("run-button").addEventListener("click", () => this.runCode());
+    document.getElementById("next-button").addEventListener("click", () => this.nextExercise());
+    document.getElementById("prev-button").addEventListener("click", () => this.prevExercise());
+
+    // Dropdown actions
+    document.querySelector(".dropdown-item:nth-child(1)").addEventListener("click", () => this.copyCode());
+    document.querySelector(".dropdown-item:nth-child(2)").addEventListener("click", () => this.resetCode());
+    document.querySelector(".dropdown-item:nth-child(3)").addEventListener("click", () => this.formatCode());
+
+     // Render only based on type
+    if (this.type === "example") {
+        this.renderExample();
+    }
+    if(this.type === "exercise" && this.exercises.length > 0) {
+        this.renderExercise(0);
+    }
+  }
+
+  // Helpers
+  deepEqual(a, b) {
+    return JSON.stringify(a) === JSON.stringify(b);
+  }
+
+  highlightLabel(text) {
+    return text.replace(/`([^`]+)`/g, '<span class="label">$1</span>');
+  }
+
+  updateActions(elem) {
+    const hideLabelButton = document.querySelector(".result-status-label>button");
+    hideLabelButton.addEventListener("click", () => {
+      this.outputDiv.style.display = "none";
+      elem.remove();
+    });
+  }
+
+  // Render exercise / example
+  renderExercise(index) {
+    const exerciseText = document.querySelector(".exercise-text");
+    const current = this.exercises[index];
+    const editorLangContainer = document.querySelector(".editor-lang");
+
+    this.trainingButton.checked = this.trainingMode;
+    editorLangContainer.innerHTML = `<span class="fw-bold">${current.codeLang}</span>`;
+    exerciseText.innerHTML = `
+      <h2>${current.title}</h2>
+      <p>${this.highlightLabel(current.problem_statement)}</p>
+      <p><strong>Test Cases:</strong></p>
+      <ul>
+        ${current.test_cases
+          .map(tc => `<li><code>Input:</code> ${JSON.stringify(tc.input)} → <code>Expected:</code> ${JSON.stringify(tc.expected)}</li>`)
+          .join("")}
+      </ul>
+      ${this.type === "exercise" && current.solution ? `<details><summary>Solution</summary><pre>${current.solution}</pre></details>` : ""}
+    `;
+
+    // Reset Monaco editor with starter code
+    if (window.monacoEditor) {
+      window.monacoEditor.setValue(current.starter_code || "");
+      monaco.editor.setModelLanguage(window.monacoEditor.getModel(), current.codeLang.toLowerCase());
+    }
+
+    this.outputDiv.innerHTML = "";
+  }
+
+
+    renderExample() {
+    const editorLangContainer = document.querySelector(".editor-lang");
+
+    this.trainingButton.checked = this.trainingMode;
+    editorLangContainer.innerHTML = `<span class="fw-bold">${this.codeLang}</span>`;
+    
+    // Reset Monaco editor with starter code
+    if (window.monacoEditor) {
+      window.monacoEditor.setValue(current.starter_code || "");
+      monaco.editor.setModelLanguage(window.monacoEditor.getModel(), this.codeLang.toLowerCase());
+    }
+
+    this.outputDiv.innerHTML = "";
+  }
+
+  // Run code depending on type
+  runCode() {
+    const current = this.exercises[this.currentExerciseIndex];
+    const code = window.monacoEditor.getValue();
+
+    if (this.type === "example") {
+      this.runExample(current, code);
+    } else {
+      this.runExercise(current, code);
+    }
+  }
+
+  runExample(current, code) {
+    try {
+      if (this.codeLang.toLowerCase() === "html" || this.codeLang.toLowerCase() === "css") {
+        this.outputDiv.innerHTML = `<iframe style="width:100%;height:200px;border:1px solid #ccc"></iframe>`;
+        const iframe = this.outputDiv.querySelector("iframe");
+        const htmlContent =
+          this.codeLang.toLowerCase() === "html" ? code : `<style>${code}</style>`;
+        iframe.srcdoc = htmlContent;
+      } else if (this.codeLang.toLowerCase() === "javascript") {
+        this.outputDiv.innerHTML = `<pre class="console-output"></pre>`;
+        const consoleArea = this.outputDiv.querySelector("pre");
+        const consoleLog = (...args) => {
+          consoleArea.textContent += args.join(" ") + "\n";
+        };
+        new Function("console", code)( { log: consoleLog } );
+      }
+    } catch (err) {
+      this.outputDiv.innerHTML = `<p style="color:red">Error: ${err.message}</p>`;
+    }
+  }
+
+  runExercise(current, code) {
+    let resultsHTML = "<h3>Results:</h3><ul>";
+    try {
+      const runner = new Function(
+        "input",
+        code + "; return typeof " + current.fnName + "==='function' ? " + current.fnName + "(input) : undefined;"
+      );
+
+      this.outputDiv.style.display = "block";
+      current.test_cases.forEach((test, idx) => {
+        try {
+          const userOutput = runner(test.input);
+          if (this.deepEqual(userOutput, test.expected)) {
+            resultsHTML += `<li style="color:green">✅ Test ${idx + 1} Passed — Output: ${JSON.stringify(userOutput)}</li>`;
+          } else {
+            resultsHTML += `<li style="color:red">❌ Test ${idx + 1} Failed — Your Output: ${JSON.stringify(userOutput)}, Expected: ${JSON.stringify(test.expected)}</li>`;
+          }
+        } catch (err) {
+          resultsHTML += `<li style="color:red">❌ Test ${idx + 1} Error — ${err.message}</li>`;
+        }
+      });
+    } catch (err) {
+      resultsHTML = `<p style="color:red">❌ Code Error: ${err.message}</p>`;
+    }
+    resultsHTML += "</ul>";
+    this.outputDiv.innerHTML = resultsHTML;
+  }
+
+  // Training steps
+  runTrainingStep() {
+    const current = this.exercises[this.currentExerciseIndex];
+    if (this.currentStep >= current.trainingSteps.length) {
+      responsiveVoice.speak("Training complete!", "UK English Male");
+      setTimeout(() => {
+        this.trainingMode = false;
+        this.trainingButton.checked = this.trainingMode;
+      }, 2000);
+      return;
+    }
+
+    const step = current.trainingSteps[this.currentStep];
+
+    if (step.cursor) {
+      window.monacoEditor.setPosition(step.cursor);
+      window.monacoEditor.focus();
+    }
+
+    responsiveVoice.speak(step.message, "UK English Male", {
+      onend: () => {
+        if (step.expectedText) {
+          this.typeWriterEffect(step.expectedText, step.cursor, () => {
+            this.currentStep++;
+            if (this.trainingMode) setTimeout(() => this.runTrainingStep(), 1500);
+          });
+        } else {
+          this.currentStep++;
+          if (this.trainingMode) setTimeout(() => this.runTrainingStep(), 1500);
+        }
+      }
+    });
+  }
+
+  typeWriterEffect(text, position, callback) {
+    let i = 0;
+    const typing = () => {
+      if (i < text.length) {
+        window.monacoEditor.executeEdits(null, [
+          {
+            range: new monaco.Range(
+              position.lineNumber,
+              position.column + i,
+              position.lineNumber,
+              position.column + i
+            ),
+            text: text[i],
+            forceMoveMarkers: true
+          }
+        ]);
+        i++;
+        setTimeout(typing, 120);
+      } else if (callback) callback();
+    };
+    typing();
+  }
+
+  // Navigation
+  nextExercise() {
+    if (this.currentExerciseIndex < this.exercises.length - 1) {
+      this.currentExerciseIndex++;
+      this.renderExercise(this.currentExerciseIndex);
+    }
+  }
+
+  prevExercise() {
+    if (this.currentExerciseIndex > 0) {
+      this.currentExerciseIndex--;
+      this.renderExercise(this.currentExerciseIndex);
+    }
+  }
+
+  // Utility actions
+  copyCode() {
+    if (window.monacoEditor) {
+      const code = window.monacoEditor.getValue();
+      navigator.clipboard.writeText(code).then(() => alert("Code copied to clipboard!"));
+    }
+  }
+
+  resetCode() {
+    const current = this.exercises[this.currentExerciseIndex];
+    if (window.monacoEditor) {
+      window.monacoEditor.setValue(current.starter_code || "");
+    }
+  }
+
+  formatCode() {
+    if (window.monacoEditor) {
+      window.monacoEditor.getAction("editor.action.formatDocument").run();
+    }
+  }
+}
+const root = document.getElementById("editorArea");
+// Example Editor for HTML
+// new Editor({
+//   container: root,
+//   codeLang: "html",
+//   type: "example",
+//   starter_code: "<h1>Hello World</h1>"
+// });
+
+// Example Editor for JavaScript
+// new Editor({
+//   container: root,
+//   codeLang: "javascript",
+//   type: "example",
+//   starter_code: "console.log('Hello from JS!')"
+// });
+
+// Exercise Editor for JavaScript
+
+document.addEventListener("DOMContentLoaded", () => {
+  const exerciseEditor = new Editor({
+    container: "editorArea",
+    type: "example",
+    starter_code: "function sum(input) {\n  // Your code here\n}",
+    codeLang: "html",
+  });
+});
+
+
+
+
+</script>
+</body>
+</html>
