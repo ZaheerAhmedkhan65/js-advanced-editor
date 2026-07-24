@@ -1,0 +1,232 @@
+[
+    {
+        "title": "HTML Exercise 1 - Basic Structure",
+        "codeLang": "HTML",
+        "problem_statement": "Create a basic HTML page structure with `<!DOCTYPE>`, `<html>`, `<head>`, and `<body>` tags.",
+        "test_cases": [
+            {
+                "input": null,
+                "expected": "doctype"
+            }
+        ],
+        "trainingSteps": [
+            {
+                "message": "Start by typing the DOCTYPE declaration.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": "<!DOCTYPE html>"
+            },
+            {
+                "message": "Now create the opening and closing html tags.",
+                "cursor": { "lineNumber": 2, "column": 1 },
+                "expectedText": "\n<html>\n</html>"
+            },
+            {
+                "message": "Add the head section inside the html element.",
+                "cursor": { "lineNumber": 2, "column": 7 },
+                "expectedText": "\n<head>\n</head>"
+            },
+            {
+                "message": "Add the body section after the head.",
+                "cursor": { "lineNumber": 3, "column": 7 },
+                "expectedText": "\n<body>\n</body>"
+            }
+        ],
+        "fnName": "htmlStructure",
+        "starter_code": "<!-- Write your HTML structure here -->"
+    },
+    {
+        "title": "HTML Exercise 2 - Heading Tags",
+        "codeLang": "HTML",
+        "problem_statement": "Create an HTML page with heading tags from h1 to h6.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Add h1 heading tag.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": "<h1>Main Heading</h1>"
+            },
+            {
+                "message": "Add h2 heading tag.",
+                "cursor": { "lineNumber": 1, "column": 22 },
+                "expectedText": "\n<h2>Subheading</h2>"
+            },
+            {
+                "message": "Add h3 heading tag.",
+                "cursor": { "lineNumber": 2, "column": 13 },
+                "expectedText": "\n<h3>Section Heading</h3>"
+            }
+        ],
+        "fnName": "headings",
+        "starter_code": "<!-- Add headings here -->"
+    },
+    {
+        "title": "HTML Exercise 3 - Paragraph and Text Formatting",
+        "codeLang": "HTML",
+        "problem_statement": "Create a paragraph with bold and italic text formatting.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Add a paragraph tag with the text.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": "<p>"
+            },
+            {
+                "message": "Add bold text using strong tag.",
+                "cursor": { "lineNumber": 1, "column": 4 },
+                "expectedText": "This is <strong>bold</strong> "
+            },
+            {
+                "message": "Add italic text using em tag and close paragraph.",
+                "cursor": { "lineNumber": 1, "column": 25 },
+                "expectedText": "and <em>italic</em> text.</p>"
+            }
+        ],
+        "fnName": "textFormatting",
+        "starter_code": "<!-- Add formatted text here -->"
+    },
+    {
+        "title": "HTML Exercise 4 - Links and Images",
+        "codeLang": "HTML",
+        "problem_statement": "Create a link to a website and add an image with alt text.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Add an anchor tag for a link.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": "<a href=\"https://example.com\">Visit Example</a>"
+            },
+            {
+                "message": "Add an img tag for an image.",
+                "cursor": { "lineNumber": 1, "column": 49 },
+                "expectedText": "\n<img src=\"image.jpg\" alt=\"Description\">"
+            }
+        ],
+        "fnName": "media",
+        "starter_code": "<!-- Add link and image here -->"
+    },
+    {
+        "title": "HTML Exercise 5 - Lists",
+        "codeLang": "HTML",
+        "problem_statement": "Create an ordered list and an unordered list.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Create an ordered list.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": "<ol>\n  <li>Item 1</li>\n  <li>Item 2</li>\n</ol>"
+            },
+            {
+                "message": "Add an unordered list after.",
+                "cursor": { "lineNumber": 4, "column": 1 },
+                "expectedText": "\n<ul>\n  <li>Bullet 1</li>\n  <li>Bullet 2</li>\n</ul>"
+            }
+        ],
+        "fnName": "lists",
+        "starter_code": "<!-- Add lists here -->"
+    },
+    {
+        "title": "HTML Exercise 6 - Tables",
+        "codeLang": "HTML",
+        "problem_statement": "Create a table with headers and data rows.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Add table tag.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": "<table>\n  <tr>\n    <th>Header 1</th>\n    <th>Header 2</th>\n  </tr>\n  <tr>\n    <td>Data 1</td>\n    <td>Data 2</td>\n  </tr>\n</table>"
+            }
+        ],
+        "fnName": "table",
+        "starter_code": "<!-- Add table here -->"
+    },
+    {
+        "title": "HTML Exercise 7 - Forms",
+        "codeLang": "HTML",
+        "problem_statement": "Create a form with input fields for name and email.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Add form tag.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": "<form>"
+            },
+            {
+                "message": "Add label and input for name.",
+                "cursor": { "lineNumber": 1, "column": 7 },
+                "expectedText": "\n  <label>Name:</label>\n  <input type=\"text\" id=\"name\">"
+            },
+            {
+                "message": "Add label and input for email and close form.",
+                "cursor": { "lineNumber": 3, "column": 24 },
+                "expectedText": "\n  <label>Email:</label>\n  <input type=\"email\" id=\"email\">\n</form>"
+            }
+        ],
+        "fnName": "forms",
+        "starter_code": "<!-- Add form here -->"
+    },
+    {
+        "title": "HTML Exercise 8 - Div and Semantic Elements",
+        "codeLang": "HTML",
+        "problem_statement": "Create a page using semantic HTML elements like header, nav, main, and footer.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Add header element.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": "<header>\n  <h1>Site Title</h1>\n</header>"
+            },
+            {
+                "message": "Add nav element.",
+                "cursor": { "lineNumber": 3, "column": 1 },
+                "expectedText": "\n<nav>\n  <ul>\n    <li><a href=\"#\">Home</a></li>\n  </ul>\n</nav>"
+            },
+            {
+                "message": "Add main and footer elements.",
+                "cursor": { "lineNumber": 8, "column": 1 },
+                "expectedText": "\n<main>\n  <p>Content goes here</p>\n</main>\n<footer>\n  <p>Copyright 2024</p>\n</footer>"
+            }
+        ],
+        "fnName": "semantic",
+        "starter_code": "<!-- Add semantic elements here -->"
+    },
+    {
+        "title": "HTML Exercise 9 - Attributes and Classes",
+        "codeLang": "HTML",
+        "problem_statement": "Create an element with id, class, and data attributes.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Add a div with id and class attributes.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": "<div id=\"main\" class=\"container\" data-value=\"123\">Content</div>"
+            }
+        ],
+        "fnName": "attributes",
+        "starter_code": "<!-- Add element with attributes -->"
+    },
+    {
+        "title": "HTML Exercise 10 - Meta Tags",
+        "codeLang": "HTML",
+        "problem_statement": "Add meta tags for character set, viewport, and description.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Add meta charset tag.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": "<meta charset=\"UTF-8\">"
+            },
+            {
+                "message": "Add viewport meta tag.",
+                "cursor": { "lineNumber": 1, "column": 23 },
+                "expectedText": "\n<meta viewport=\"width=device-width, initial-scale=1.0\">"
+            },
+            {
+                "message": "Add description meta tag.",
+                "cursor": { "lineNumber": 2, "column": 1 },
+                "expectedText": "\n<meta name=\"description\" content=\"A sample page\">"
+            }
+        ],
+        "fnName": "meta",
+        "starter_code": "<!-- Add meta tags in head section -->"
+    }
+]

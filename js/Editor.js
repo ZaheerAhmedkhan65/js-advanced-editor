@@ -16,10 +16,17 @@ class Editor {
         this.init();
     }
 
-
     init() {
         // Bind training button
         this.trainingButton.addEventListener("click", () => {
+            // Only allow training mode for exercises that have training steps
+            const current = this.exercises[this.currentExerciseIndex];
+            if (!current || !current.trainingSteps) {
+                alert("Training mode is only available for exercises with training steps.");
+                this.trainingButton.checked = false;
+                return;
+            }
+            
             this.trainingMode = !this.trainingMode;
             if (this.trainingMode) {
                 this.currentStep = 0;
@@ -27,8 +34,6 @@ class Editor {
                 this.runTrainingStep();
             }
         });
-
-        console.log("cont : ", this.container);
 
         // Buttons
         document.getElementById("run-button").addEventListener("click", () => this.runCode());
@@ -54,16 +59,30 @@ class Editor {
         return JSON.stringify(a) === JSON.stringify(b);
     }
 
+    escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
     highlightLabel(text) {
-        return text.replace(/`([^`]+)`/g, '<span class="label">$1</span>');
+        // First escape HTML to prevent XSS and render HTML tags as text
+        const escaped = this.escapeHtml(text);
+        // Then add highlighting for code labels
+        return escaped.replace(/`([^`]+)`/g, '<span class="label">$1</span>');
     }
 
     updateActions(elem) {
-        const hideLabelButton = document.querySelector(".result-status-label>button");
-        hideLabelButton.addEventListener("click", () => {
-            this.outputDiv.style.display = "none";
-            elem.remove();
-        });
+        // Use setTimeout to ensure the element is in the DOM
+        setTimeout(() => {
+            const hideLabelButton = elem.querySelector("button");
+            if (hideLabelButton) {
+                hideLabelButton.addEventListener("click", () => {
+                    this.outputDiv.style.display = "none";
+                    elem.remove();
+                });
+            }
+        }, 0);
     }
 
     // Render exercise / example
@@ -96,7 +115,6 @@ class Editor {
         this.outputDiv.style.display = "none";
     }
 
-
     renderExample() {
         const editorLangContainer = document.querySelector(".editor-lang");
 
@@ -119,7 +137,8 @@ class Editor {
         const current = this.exercises[this.currentExerciseIndex];
         const code = window.monacoEditor.getValue();
 
-        if (this.type === "example") {
+        // Check if it's HTML/CSS language - use runExample instead of runExercise
+        if (this.type === "example" || !current || current.codeLang.toLowerCase() === "html" || current.codeLang.toLowerCase() === "css") {
             this.runExample(current, code);
         } else {
             this.runExercise(current, code);
@@ -128,14 +147,16 @@ class Editor {
 
     runExample(current, code) {
         try {
-            if (this.codeLang.toLowerCase() === "html" || this.codeLang.toLowerCase() === "css") {
+            // Use the language from current exercise or this.codeLang
+            const lang = current ? current.codeLang.toLowerCase() : this.codeLang.toLowerCase();
+            if (lang === "html" || lang === "css") {
                 this.outputDiv.innerHTML = `<iframe style="width:100%;height:200px;border:1px solid #ccc"></iframe>`;
                 const iframe = this.outputDiv.querySelector("iframe");
                 this.outputDiv.style.display = "block";
                 const htmlContent =
-                    this.codeLang.toLowerCase() === "html" ? code : `<style>${code}</style>`;
+                    lang === "html" ? code : `<style>${code}</style>`;
                 iframe.srcdoc = htmlContent;
-            } else if (this.codeLang.toLowerCase() === "javascript") {
+            } else if (lang === "javascript") {
                 this.outputDiv.innerHTML = `<pre class="console-output"></pre>`;
                 const consoleArea = this.outputDiv.querySelector("pre");
                 this.outputDiv.style.display = "block";
@@ -189,7 +210,7 @@ class Editor {
     // Training steps
     runTrainingStep() {
         const current = this.exercises[this.currentExerciseIndex];
-        if (this.currentStep >= current.trainingSteps.length) {
+        if (!current || !current.trainingSteps || this.currentStep >= current.trainingSteps.length) {
             responsiveVoice.speak("Training complete!", "UK English Male");
             setTimeout(() => {
                 this.trainingMode = false;
@@ -255,7 +276,6 @@ class Editor {
         }
     }
 
-
     // Navigation
     nextExercise() {
         if (this.currentExerciseIndex < this.exercises.length - 1) {
@@ -282,7 +302,7 @@ class Editor {
     resetCode() {
         const current = this.exercises[this.currentExerciseIndex];
         if (window.monacoEditor) {
-            if (this.type === "example") {
+            if (this.type === "example" || !current) {
                 window.monacoEditor.setValue(this.starter_code || "");
             } else {
                 window.monacoEditor.setValue(current.starter_code || "");
@@ -296,89 +316,83 @@ class Editor {
             window.monacoEditor.getAction("editor.action.formatDocument").run();
         }
     }
-}
-const root = document.getElementById("editor");
-// Example Editor for HTML
-// new Editor({
-//   container: root,
-//   codeLang: "html",
-//   type: "example",
-//   starter_code: "<h1>Hello World</h1>"
-// });
 
-// Example Editor for JavaScript
-// new Editor({
-//   container: root,
-//   codeLang: "javascript",
-//   type: "example",
-//   starter_code: "console.log('Hello from JS!')"
-// });
-
-
-
-
-
-
-const exercises = [
-    {
-        title: "Example Exercise 1",
-        codeLang: "Javascript",
-        problem_statement: "Write a function `sum` that takes an array of numbers and returns the sum of all the numbers.",
-        test_cases: [
-            { input: [1, 2, 3, 4, 5], expected: 15 }
-        ],
-        trainingSteps: [
-            { message: "Start by typing the keyword function.", cursor: { lineNumber: 1, column: 1 }, expectedText: "function " },
-            { message: "Next, write the function name sum.", cursor: { lineNumber: 1, column: 10 }, expectedText: "sum" },
-            { message: "Now, add parentheses and a parameter named input.", cursor: { lineNumber: 1, column: 13 }, expectedText: "(input)" },
-            { message: "Open a curly brace to start the function body.", cursor: { lineNumber: 1, column: 20 }, expectedText: " {" },
-            { message: "Inside the function, type return input.reduce.", cursor: { lineNumber: 2, column: 3 }, expectedText: "\n  return input.reduce" },
-            { message: "Inside reduce, write accumulator comma current.", cursor: { lineNumber: 2, column: 25 }, expectedText: "((accumulator, current)" },
-            { message: "Add arrow function that returns accumulator plus current.", cursor: { lineNumber: 3, column: 47 }, expectedText: " => accumulator + current" },
-            { message: "Finally, close the reduce call with parentheses.", cursor: { lineNumber: 2, column: 72 }, expectedText: ")" },
-            { message: "Close the function body.", cursor: { lineNumber: 3, column: 1 }, expectedText: "\n}" }
-        ],
-        fnName: "sum",
-        starter_code: `function sum(input) {\n  // Your code here\n}`
-    },
-    {
-        title: "Example Exercise 2",
-        codeLang: "Javascript",
-        problem_statement: "Write a function `reverse` that takes a string and returns the reversed string.",
-        test_cases: [
-            { input: "hello", expected: "olleh" },
-            { input: "abc", expected: "cba" }
-        ],
-        trainingSteps: [
-            { message: "Start by typing the keyword function.", cursor: { lineNumber: 1, column: 1 }, expectedText: "function " },
-            { message: "Next, write the function name reverse.", cursor: { lineNumber: 1, column: 10 }, expectedText: "reverse" },
-            { message: "Add parentheses and a parameter named input.", cursor: { lineNumber: 1, column: 17 }, expectedText: "(input)" },
-            { message: "Open a curly brace to start the function body.", cursor: { lineNumber: 1, column: 24 }, expectedText: " {" },
-            { message: "Inside the function, write return input.split.", cursor: { lineNumber: 2, column: 3 }, expectedText: "\n  return input.split" },
-            { message: "Pass empty string as argument to split.", cursor: { lineNumber: 2, column: 25 }, expectedText: "('')" },
-            { message: "Now chain reverse method after split.", cursor: { lineNumber: 2, column: 29 }, expectedText: ".reverse()" },
-            { message: "Finally, chain join method with empty string to combine characters.", cursor: { lineNumber: 2, column: 39 }, expectedText: ".join('')" },
-            { message: "Close the function body.", cursor: { lineNumber: 3, column: 1 }, expectedText: "\n}" }
-        ],
-        fnName: "reverse",
-        starter_code: `function reverse(input) {\n  // Your code here\n}`
-    }
-];
-
-
-
-// Exercise Editor for JavaScript
-
-document.addEventListener("DOMContentLoaded", () => {
-    setTimeout(() => {
-        // when creating a new editor instance
-        const editor1 = new Editor({
-            containerId: "editor",
-            codeLang: "html",
-            starter_code: "function sum(input) {\n  // Your code here\n}",
+    // Load exercises from JSON file
+    async loadExercises(lang) {
+        try {
+            const response = await fetch(`./data/demo/${lang}/exercise_1.json`);
+            if (!response.ok) throw new Error(`Could not load ${lang} exercises`);
+            const data = await response.json();
+            this.exercises = data;
+            this.currentExerciseIndex = 0;
+            this.currentStep = 0;
+            this.trainingMode = false;
+            this.trainingButton.checked = false;
+            this.type = "exercise";
+            // Update codeLang based on first exercise or passed language
+            if (data && data.length > 0) {
+                this.codeLang = data[0].codeLang || lang;
+            } else {
+                // Map language to proper display name
+                const langMap = {
+                    "javascript": "Javascript",
+                    "html": "HTML",
+                    "html&css": "CSS"
+                };
+                this.codeLang = langMap[lang] || lang;
+            }
+            this.renderExercise(0);
+        } catch (err) {
+            console.error("Error loading exercises:", err);
+            this.exercises = [];
+            this.type = "example";
         }
-        );
-        // later, if you want to switch to JS without re-creating editor
-        editor1.setEditorLanguage("html", "<h1>Hello</h1>");
+    }
+
+    // Switch language and load corresponding exercises
+    switchLanguage(lang) {
+        const langMap = {
+            "javascript": "javascript",
+            "html": "html",
+            "css": "html&css"
+        };
+        
+        const mappedLang = langMap[lang] || lang;
+        this.loadExercises(mappedLang);
+    }
+}
+
+// Initialize editor and language selector
+document.addEventListener("DOMContentLoaded", () => {
+    const languageButtons = document.querySelectorAll(".language-btn");
+    
+    let editor1;
+    setTimeout(() => {
+        editor1 = new Editor({
+            containerId: "editor",
+            codeLang: "Javascript",
+            type: "exercise",
+            exercises: []
+        });
+        
+        // Load default language exercises
+        editor1.loadExercises("javascript");
     }, 1000);
-})
+    
+    // Language selector button handlers
+    languageButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const lang = btn.dataset.lang;
+            languageButtons.forEach(b => {
+                b.classList.remove("btn-primary", "active");
+                b.classList.add("btn-secondary");
+            });
+            btn.classList.remove("btn-secondary");
+            btn.classList.add("btn-primary", "active");
+            
+            if (editor1) {
+                editor1.switchLanguage(lang);
+            }
+        });
+    });
+});

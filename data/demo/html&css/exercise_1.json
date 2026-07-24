@@ -1,0 +1,222 @@
+[
+    {
+        "title": "CSS Exercise 1 - Basic Selectors",
+        "codeLang": "CSS",
+        "problem_statement": "Style elements using tag, class, and id selectors.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Add a style for the body tag.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": "body {\n  font-family: Arial, sans-serif;\n}"
+            },
+            {
+                "message": "Add a class selector for container.",
+                "cursor": { "lineNumber": 3, "column": 1 },
+                "expectedText": "\n.container {\n  width: 80%;\n  margin: 0 auto;\n}"
+            },
+            {
+                "message": "Add an id selector for header.",
+                "cursor": { "lineNumber": 6, "column": 1 },
+                "expectedText": "\n#header {\n  background-color: #333;\n  color: white;\n}"
+            }
+        ],
+        "fnName": "selectors",
+        "starter_code": "/* Add your CSS here */"
+    },
+    {
+        "title": "CSS Exercise 2 - Box Model",
+        "codeLang": "CSS",
+        "problem_statement": "Apply margin, padding, and border properties to an element.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Add a box class with padding.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": ".box {\n  padding: 20px;\n}"
+            },
+            {
+                "message": "Add margin to the box class.",
+                "cursor": { "lineNumber": 3, "column": 1 },
+                "expectedText": "\n.box {\n  margin: 10px;\n}"
+            },
+            {
+                "message": "Add border to complete the box model.",
+                "cursor": { "lineNumber": 3, "column": 13 },
+                "expectedText": "\n.box {\n  border: 2px solid #000;\n}"
+            }
+        ],
+        "fnName": "boxModel",
+        "starter_code": "/* Add box model styles */"
+    },
+    {
+        "title": "CSS Exercise 3 - Flexbox Layout",
+        "codeLang": "CSS",
+        "problem_statement": "Create a flex container with centered items.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Add flex container class.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": ".flex-container {\n  display: flex;\n}"
+            },
+            {
+                "message": "Add justify-content center.",
+                "cursor": { "lineNumber": 3, "column": 1 },
+                "expectedText": "\n.flex-container {\n  justify-content: center;\n}"
+            },
+            {
+                "message": "Add align-items center.",
+                "cursor": { "lineNumber": 3, "column": 27 },
+                "expectedText": "\n.flex-container {\n  align-items: center;\n}"
+            }
+        ],
+        "fnName": "flexbox",
+        "starter_code": "/* Add flexbox styles */"
+    },
+    {
+        "title": "CSS Exercise 4 - Grid Layout",
+        "codeLang": "CSS",
+        "problem_statement": "Create a grid layout with two columns.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Add grid container class.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": ".grid-container {\n  display: grid;\n}"
+            },
+            {
+                "message": "Add grid-template-columns for two columns.",
+                "cursor": { "lineNumber": 3, "column": 1 },
+                "expectedText": "\n.grid-container {\n  grid-template-columns: 1fr 1fr;\n}"
+            },
+            {
+                "message": "Add gap property.",
+                "cursor": { "lineNumber": 3, "column": 35 },
+                "expectedText": "\n.grid-container {\n  gap: 20px;\n}"
+            }
+        ],
+        "fnName": "grid",
+        "starter_code": "/* Add grid styles */"
+    },
+    {
+        "title": "CSS Exercise 5 - Colors and Backgrounds",
+        "codeLang": "CSS",
+        "problem_statement": "Apply background colors and text colors.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Add a styled element with background.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": ".colored {\n  background-color: #ff5733;\n}"
+            },
+            {
+                "message": "Add text color.",
+                "cursor": { "lineNumber": 3, "column": 1 },
+                "expectedText": "\n.colored {\n  color: #ffffff;\n}"
+            }
+        ],
+        "fnName": "colors",
+        "starter_code": "/* Add color styles */"
+    },
+    {
+        "title": "CSS Exercise 6 - Typography",
+        "codeLang": "CSS",
+        "problem_statement": "Style text with font properties and text alignment.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Add text styling for headings.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": "h1 {\n  font-size: 2.5rem;\n}"
+            },
+            {
+                "message": "Add font weight and text alignment.",
+                "cursor": { "lineNumber": 3, "column": 1 },
+                "expectedText": "\nh1 {\n  font-weight: bold;\n  text-align: center;\n}"
+            }
+        ],
+        "fnName": "typography",
+        "starter_code": "/* Add typography styles */"
+    },
+    {
+        "title": "CSS Exercise 7 - Positioning",
+        "codeLang": "CSS",
+        "problem_statement": "Position an element using absolute positioning.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Add positioned element with relative.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": ".relative-box {\n  position: relative;\n}"
+            },
+            {
+                "message": "Add absolute positioned child.",
+                "cursor": { "lineNumber": 3, "column": 1 },
+                "expectedText": "\n.absolute-child {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}"
+            }
+        ],
+        "fnName": "positioning",
+        "starter_code": "/* Add positioning styles */"
+    },
+    {
+        "title": "CSS Exercise 8 - Responsive Design",
+        "codeLang": "CSS",
+        "problem_statement": "Create responsive styles using media queries.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Add base styles.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": ".responsive {\n  width: 100%;\n}"
+            },
+            {
+                "message": "Add media query for larger screens.",
+                "cursor": { "lineNumber": 3, "column": 1 },
+                "expectedText": "\n@media (min-width: 768px) {\n  .responsive {\n    width: 50%;\n  }\n}"
+            }
+        ],
+        "fnName": "responsive",
+        "starter_code": "/* Add responsive styles */"
+    },
+    {
+        "title": "CSS Exercise 9 - Pseudo-Classes",
+        "codeLang": "CSS",
+        "problem_statement": "Style links with hover and active pseudo-classes.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Add base link styles.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": "a {\n  color: blue;\n  text-decoration: none;\n}"
+            },
+            {
+                "message": "Add hover state.",
+                "cursor": { "lineNumber": 3, "column": 1 },
+                "expectedText": "\na:hover {\n  color: red;\n  text-decoration: underline;\n}"
+            },
+            {
+                "message": "Add active state.",
+                "cursor": { "lineNumber": 5, "column": 1 },
+                "expectedText": "\na:active {\n  color: green;\n}"
+            }
+        ],
+        "fnName": "pseudo",
+        "starter_code": "/* Add pseudo-class styles */"
+    },
+    {
+        "title": "CSS Exercise 10 - Transitions and Animations",
+        "codeLang": "CSS",
+        "problem_statement": "Add transition effects to an element.",
+        "test_cases": [],
+        "trainingSteps": [
+            {
+                "message": "Add transition to an element.",
+                "cursor": { "lineNumber": 1, "column": 1 },
+                "expectedText": ".transition {\n  transition: all 0.3s ease;\n}"
+            }
+        ],
+        "fnName": "animations",
+        "starter_code": "/* Add transition styles */"
+    }
+]

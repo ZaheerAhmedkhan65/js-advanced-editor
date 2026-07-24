@@ -1,0 +1,205 @@
+[
+    {
+        "title": "JavaScript Exercise 1 - Sum Array",
+        "codeLang": "Javascript",
+        "problem_statement": "Write a function `sum` that takes an array of numbers and returns the sum of all the numbers.",
+        "test_cases": [
+            { "input": [1, 2, 3, 4, 5], "expected": 15 }
+        ],
+        "trainingSteps": [
+            { "message": "Start by typing the keyword function.", "cursor": { "lineNumber": 1, "column": 1 }, "expectedText": "function " },
+            { "message": "Next, write the function name sum.", "cursor": { "lineNumber": 1, "column": 10 }, "expectedText": "sum" },
+            { "message": "Now, add parentheses and a parameter named input.", "cursor": { "lineNumber": 1, "column": 13 }, "expectedText": "(input)" },
+            { "message": "Open a curly brace to start the function body.", "cursor": { "lineNumber": 1, "column": 18 }, "expectedText": " {" },
+            { "message": "Inside the function, type return input.reduce.", "cursor": { "lineNumber": 2, "column": 3 }, "expectedText": "\n  return input.reduce" },
+            { "message": "Inside reduce, write accumulator comma current.", "cursor": { "lineNumber": 2, "column": 25 }, "expectedText": "((accumulator, current)" },
+            { "message": "Add arrow function that returns accumulator plus current.", "cursor": { "lineNumber": 2, "column": 47 }, "expectedText": " => accumulator + current" },
+            { "message": "Add the initial value 0.", "cursor": { "lineNumber": 2, "column": 72 }, "expectedText": ", 0)" },
+            { "message": "Close the function body.", "cursor": { "lineNumber": 2, "column": 75 }, "expectedText": "\n}" }
+        ],
+        "fnName": "sum",
+        "starter_code": "function sum(input) {\n  // Your code here\n}"
+    },
+    {
+        "title": "JavaScript Exercise 2 - Reverse String",
+        "codeLang": "Javascript",
+        "problem_statement": "Write a function `reverse` that takes a string and returns the reversed string.",
+        "test_cases": [
+            { "input": "hello", "expected": "olleh" },
+            { "input": "abc", "expected": "cba" }
+        ],
+        "trainingSteps": [
+            { "message": "Start by typing the keyword function.", "cursor": { "lineNumber": 1, "column": 1 }, "expectedText": "function " },
+            { "message": "Next, write the function name reverse.", "cursor": { "lineNumber": 1, "column": 10 }, "expectedText": "reverse" },
+            { "message": "Add parentheses and a parameter named str.", "cursor": { "lineNumber": 1, "column": 18 }, "expectedText": "(str)" },
+            { "message": "Open a curly brace to start the function body.", "cursor": { "lineNumber": 1, "column": 22 }, "expectedText": " {" },
+            { "message": "Inside the function, write return str.split.", "cursor": { "lineNumber": 2, "column": 3 }, "expectedText": "\n  return str.split" },
+            { "message": "Pass empty string as argument to split.", "cursor": { "lineNumber": 2, "column": 18 }, "expectedText": "('')" },
+            { "message": "Now chain reverse method after split.", "cursor": { "lineNumber": 2, "column": 24 }, "expectedText": ".reverse()" },
+            { "message": "Finally, chain join method to combine characters.", "cursor": { "lineNumber": 2, "column": 34 }, "expectedText": ".join('')" },
+            { "message": "Close the function body.", "cursor": { "lineNumber": 2, "column": 43 }, "expectedText": "\n}" }
+        ],
+        "fnName": "reverse",
+        "starter_code": "function reverse(str) {\n  // Your code here\n}"
+    },
+    {
+        "title": "JavaScript Exercise 3 - Double Numbers",
+        "codeLang": "Javascript",
+        "problem_statement": "Write a function `double` that takes an array of numbers and returns a new array with each number doubled.",
+        "test_cases": [
+            { "input": [1, 2, 3], "expected": [2, 4, 6] },
+            { "input": [5, 10], "expected": [10, 20] }
+        ],
+        "trainingSteps": [
+            { "message": "Start by typing the keyword function.", "cursor": { "lineNumber": 1, "column": 1 }, "expectedText": "function " },
+            { "message": "Next, write the function name double.", "cursor": { "lineNumber": 1, "column": 10 }, "expectedText": "double" },
+            { "message": "Now, add parentheses and a parameter named arr.", "cursor": { "lineNumber": 1, "column": 16 }, "expectedText": "(arr)" },
+            { "message": "Open a curly brace to start the function body.", "cursor": { "lineNumber": 1, "column": 20 }, "expectedText": " {" },
+            { "message": "Inside the function, use map to double each element.", "cursor": { "lineNumber": 2, "column": 3 }, "expectedText": "\n  return arr.map" },
+            { "message": "Add callback function with arrow syntax.", "cursor": { "lineNumber": 2, "column": 17 }, "expectedText": "((x)" },
+            { "message": "Return x multiplied by 2.", "cursor": { "lineNumber": 2, "column": 20 }, "expectedText": " => x * 2" },
+            { "message": "Close the map call and function body.", "cursor": { "lineNumber": 2, "column": 32 }, "expectedText": ")\n}" }
+        ],
+        "fnName": "double",
+        "starter_code": "function double(arr) {\n  // Your code here\n}"
+    },
+    {
+        "title": "JavaScript Exercise 4 - Find Maximum",
+        "codeLang": "Javascript",
+        "problem_statement": "Write a function `findMax` that takes an array of numbers and returns the largest number.",
+        "test_cases": [
+            { "input": [1, 5, 3, 9, 2], "expected": 9 },
+            { "input": [-5, -2, -10], "expected": -2 }
+        ],
+        "trainingSteps": [
+            { "message": "Start by typing the keyword function.", "cursor": { "lineNumber": 1, "column": 1 }, "expectedText": "function " },
+            { "message": "Next, write the function name findMax.", "cursor": { "lineNumber": 1, "column": 10 }, "expectedText": "findMax" },
+            { "message": "Add parentheses and a parameter named arr.", "cursor": { "lineNumber": 1, "column": 17 }, "expectedText": "(arr)" },
+            { "message": "Open a curly brace to start the function body.", "cursor": { "lineNumber": 1, "column": 21 }, "expectedText": " {" },
+            { "message": "Inside the function, use Math.max with spread operator.", "cursor": { "lineNumber": 2, "column": 3 }, "expectedText": "\n  return Math.max" },
+            { "message": "Call Math.max with spread operator.", "cursor": { "lineNumber": 2, "column": 18 }, "expectedText": "...arr" },
+            { "message": "Close the function body.", "cursor": { "lineNumber": 2, "column": 24 }, "expectedText": "\n}" }
+        ],
+        "fnName": "findMax",
+        "starter_code": "function findMax(arr) {\n  // Your code here\n}"
+    },
+    {
+        "title": "JavaScript Exercise 5 - Count Vowels",
+        "codeLang": "Javascript",
+        "problem_statement": "Write a function `countVowels` that takes a string and returns the number of vowels in it.",
+        "test_cases": [
+            { "input": "hello", "expected": 2 },
+            { "input": "programming", "expected": 3 }
+        ],
+        "trainingSteps": [
+            { "message": "Start by typing the keyword function.", "cursor": { "lineNumber": 1, "column": 1 }, "expectedText": "function " },
+            { "message": "Next, write the function name countVowels.", "cursor": { "lineNumber": 1, "column": 10 }, "expectedText": "countVowels" },
+            { "message": "Add parentheses and a parameter named str.", "cursor": { "lineNumber": 1, "column": 20 }, "expectedText": "(str)" },
+            { "message": "Open a curly brace to start the function body.", "cursor": { "lineNumber": 1, "column": 24 }, "expectedText": " {" },
+            { "message": "Inside, declare a regex to match vowels.", "cursor": { "lineNumber": 2, "column": 3 }, "expectedText": "\n  const matches = str.match" },
+            { "message": "Use regex pattern for vowels.", "cursor": { "lineNumber": 2, "column": 24 }, "expectedText": "/[aeiou]/gi" },
+            { "message": "Return the count or 0 if no match.", "cursor": { "lineNumber": 2, "column": 33 }, "expectedText": "\n  return matches ? matches.length : 0\n}" }
+        ],
+        "fnName": "countVowels",
+        "starter_code": "function countVowels(str) {\n  // Your code here\n}"
+    },
+    {
+        "title": "JavaScript Exercise 6 - Factorial",
+        "codeLang": "Javascript",
+        "problem_statement": "Write a function `factorial` that takes a number and returns its factorial.",
+        "test_cases": [
+            { "input": 5, "expected": 120 },
+            { "input": 0, "expected": 1 }
+        ],
+        "trainingSteps": [
+            { "message": "Start by typing the keyword function.", "cursor": { "lineNumber": 1, "column": 1 }, "expectedText": "function " },
+            { "message": "Next, write the function name factorial.", "cursor": { "lineNumber": 1, "column": 10 }, "expectedText": "factorial" },
+            { "message": "Add parentheses and a parameter named n.", "cursor": { "lineNumber": 1, "column": 19 }, "expectedText": "(n)" },
+            { "message": "Open a curly brace to start the function body.", "cursor": { "lineNumber": 1, "column": 21 }, "expectedText": " {" },
+            { "message": "Add a check for base case.", "cursor": { "lineNumber": 2, "column": 3 }, "expectedText": "\n  if (n <= 1) return 1" },
+            { "message": "Add return statement for recursive case.", "cursor": { "lineNumber": 3, "column": 1 }, "expectedText": "\n  return n * factorial" },
+            { "message": "Add the recursive call.", "cursor": { "lineNumber": 3, "column": 22 }, "expectedText": "(n - 1)\n}" }
+        ],
+        "fnName": "factorial",
+        "starter_code": "function factorial(n) {\n  // Your code here\n}"
+    },
+    {
+        "title": "JavaScript Exercise 7 - Palindrome Check",
+        "codeLang": "Javascript",
+        "problem_statement": "Write a function `isPalindrome` that takes a string and returns true if it's a palindrome.",
+        "test_cases": [
+            { "input": "racecar", "expected": true },
+            { "input": "hello", "expected": false }
+        ],
+        "trainingSteps": [
+            { "message": "Start by typing the keyword function.", "cursor": { "lineNumber": 1, "column": 1 }, "expectedText": "function " },
+            { "message": "Next, write the function name isPalindrome.", "cursor": { "lineNumber": 1, "column": 10 }, "expectedText": "isPalindrome" },
+            { "message": "Add parentheses and a parameter named str.", "cursor": { "lineNumber": 1, "column": 22 }, "expectedText": "(str)" },
+            { "message": "Open a curly brace to start the function body.", "cursor": { "lineNumber": 1, "column": 26 }, "expectedText": " {" },
+            { "message": "Reverse the string and compare.", "cursor": { "lineNumber": 2, "column": 3 }, "expectedText": "\n  const reversed = str.split" },
+            { "message": "Add split by empty string.", "cursor": { "lineNumber": 2, "column": 23 }, "expectedText": "('').reverse()" },
+            { "message": "Add join to combine characters.", "cursor": { "lineNumber": 2, "column": 38 }, "expectedText": ".join('')" },
+            { "message": "Return the comparison result.", "cursor": { "lineNumber": 2, "column": 48 }, "expectedText": "\n  return str === reversed\n}" }
+        ],
+        "fnName": "isPalindrome",
+        "starter_code": "function isPalindrome(str) {\n  // Your code here\n}"
+    },
+    {
+        "title": "JavaScript Exercise 8 - Fibonacci",
+        "codeLang": "Javascript",
+        "problem_statement": "Write a function `fibonacci` that returns the nth Fibonacci number.",
+        "test_cases": [
+            { "input": 10, "expected": 55 },
+            { "input": 1, "expected": 1 }
+        ],
+        "trainingSteps": [
+            { "message": "Start by typing the keyword function.", "cursor": { "lineNumber": 1, "column": 1 }, "expectedText": "function " },
+            { "message": "Next, write the function name fibonacci.", "cursor": { "lineNumber": 1, "column": 10 }, "expectedText": "fibonacci" },
+            { "message": "Add parentheses and a parameter named n.", "cursor": { "lineNumber": 1, "column": 20 }, "expectedText": "(n)" },
+            { "message": "Open a curly brace to start the function body.", "cursor": { "lineNumber": 1, "column": 22 }, "expectedText": " {" },
+            { "message": "Add base case check.", "cursor": { "lineNumber": 2, "column": 3 }, "expectedText": "\n  if (n <= 1) return n" },
+            { "message": "Add return statement for recursive case.", "cursor": { "lineNumber": 3, "column": 1 }, "expectedText": "\n  return fibonacci" },
+            { "message": "Add the recursive calls.", "cursor": { "lineNumber": 3, "column": 15 }, "expectedText": "(n - 1) + fibonacci" },
+            { "message": "Complete the second recursive call and close.", "cursor": { "lineNumber": 3, "column": 31 }, "expectedText": "(n - 2)\n}" }
+        ],
+        "fnName": "fibonacci",
+        "starter_code": "function fibonacci(n) {\n  // Your code here\n}"
+    },
+    {
+        "title": "JavaScript Exercise 9 - Remove Duplicates",
+        "codeLang": "Javascript",
+        "problem_statement": "Write a function `removeDuplicates` that takes an array and returns a new array without duplicates.",
+        "test_cases": [
+            { "input": [1, 2, 2, 3, 3, 3], "expected": [1, 2, 3] },
+            { "input": ["a", "b", "a"], "expected": ["a", "b"] }
+        ],
+        "trainingSteps": [
+            { "message": "Start by typing the keyword function.", "cursor": { "lineNumber": 1, "column": 1 }, "expectedText": "function " },
+            { "message": "Next, write the function name removeDuplicates.", "cursor": { "lineNumber": 1, "column": 10 }, "expectedText": "removeDuplicates" },
+            { "message": "Add parentheses and a parameter named arr.", "cursor": { "lineNumber": 1, "column": 25 }, "expectedText": "(arr)" },
+            { "message": "Open a curly brace to start the function body.", "cursor": { "lineNumber": 1, "column": 29 }, "expectedText": " {" },
+            { "message": "Return filtered array using indexOf.", "cursor": { "lineNumber": 2, "column": 3 }, "expectedText": "\n  return arr.filter" },
+            { "message": "Add callback function for filter.", "cursor": { "lineNumber": 2, "column": 18 }, "expectedText": "((item" },
+            { "message": "Add index condition and close.", "cursor": { "lineNumber": 2, "column": 23 }, "expectedText": ", index) => arr.indexOf(item) === index)\n}" }
+        ],
+        "fnName": "removeDuplicates",
+        "starter_code": "function removeDuplicates(arr) {\n  // Your code here\n}"
+    },
+    {
+        "title": "JavaScript Exercise 10 - Debounce Function",
+        "codeLang": "Javascript",
+        "problem_statement": "Write a function `debounce` that creates a debounced version of another function.",
+        "test_cases": [
+            { "input": null, "expected": "function" }
+        ],
+        "trainingSteps": [
+            { "message": "Start by typing the keyword function.", "cursor": { "lineNumber": 1, "column": 1 }, "expectedText": "function " },
+            { "message": "Next, write the function name debounce.", "cursor": { "lineNumber": 1, "column": 10 }, "expectedText": "debounce" },
+            { "message": "Add two parameters: func and delay.", "cursor": { "lineNumber": 1, "column": 18 }, "expectedText": "(func, delay)" },
+            { "message": "Open a curly brace to start the function body.", "cursor": { "lineNumber": 1, "column": 31 }, "expectedText": " {" },
+            { "message": "Declare timeout variable.", "cursor": { "lineNumber": 2, "column": 3 }, "expectedText": "\n  let timeout\n}" }
+        ],
+        "fnName": "debounce",
+        "starter_code": "function debounce(func, delay) {\n  // Your code here\n}"
+    }
+]
